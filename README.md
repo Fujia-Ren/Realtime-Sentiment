@@ -1,7 +1,7 @@
 # Realtime-Sentiment
 Cloud Computing Final Project
 
-##Components:
+## Components:
 
 Cloud DB
 - This will store a dict of {hashtag:(frequency, avg_sentiment)}
