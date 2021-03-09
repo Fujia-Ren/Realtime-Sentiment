@@ -1,5 +1,5 @@
 # Realtime-Sentiment
-Cloud Computing Final Project
+Cloud Computing (CS5412) Final Project  
 
 ## Components:
 
