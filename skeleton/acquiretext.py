@@ -6,7 +6,7 @@ class Tweet(object):
     self.user_id (str): the Twitter user_id of the poster	
     """
 
-    #https://developer.twitter.com/en/docs/twitter-api/data-dictionary/object-model/tweet
+    # https://developer.twitter.com/en/docs/twitter-api/data-dictionary/object-model/tweet
     def __init__(self, raw_tweet):
         text, hashtags, time, user_id = self._format(raw_tweet)
         self.text = text
@@ -16,29 +16,15 @@ class Tweet(object):
 
     def _format(self, raw_tweet):
         """Private method. Outputs tuple of (text, hashtags, time, user_id)"""
-        #formats it into the fields we want. Check example json. 
+        # formats it into the fields we want. Check example json.
+
 
 def get_tweets():
     """
     get_text from the twitch api
     """
-    # example = [
-    #     {
-    #         "text": "Look at our planet earth",
-    #         "hashtags": ["earth", "life"],
-    #         "time": 2020,
-    #         "user_id": "globelover"
-    #     },
-    #     {
-    #         "text": "Qb4 Yay",
-    #         "hashtags": ["chess", "gm"],
-    #         "time": 2019,
-    #         "user_id": "chesscracker"
-    #     }
-    # ]
-    
 
-    ##Connect to Twitter in stream. 
+    # Connect to Twitter in stream.
     for raw_tweet in stream:
         new_tweet = Tweet(raw_tweet)
         example.append(raw_tweet)
