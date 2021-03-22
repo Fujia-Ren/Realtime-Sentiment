@@ -2,6 +2,7 @@ import requests
 import os
 import json
 
+
 #in terminal, export "BEARER_TOKEN=<bearer_token>"
 
 class Tweet(object):
@@ -29,10 +30,10 @@ class Tweet(object):
 
 def get_tweets():
     """
-    Get 1% of all raw tweets in stream from twitter api. Will function as connection method.
+    Get 1% of raw tweets in stream from twitter api. Will function as connection method.
     """
     headers = {'Authorization': 'Bearer {}'.format(os.environ.get("BEARER_TOKEN"))}
-    url = "https://api.twitter.com/2/tweets/sample/stream"
+    url = "https://api.twitter.com/2/tweets/sample/stream?tweet.fields=author_id,created_at,entities"
     response = requests.request('GET', url, headers=headers, stream=True)
     print(response.status_code)
     if response.status_code != 200:
