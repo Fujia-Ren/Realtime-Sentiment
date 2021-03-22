@@ -1,3 +1,9 @@
+import requests
+import os
+import json
+
+#in terminal, export "BEARER_TOKEN=<bearer_token>"
+
 class Tweet(object):
     """Tweet object:
     self.text (str): content of the tweet
@@ -23,14 +29,25 @@ class Tweet(object):
 
 def get_tweets():
     """
-    get raw tweets in stream from twitter api. Will function as connection method.
+    Get 1% of all raw tweets in stream from twitter api. Will function as connection method.
     """
-
+    headers = {'Authorization': 'Bearer {}'.format(os.environ.get("BEARER_TOKEN"))}
+    url = "https://api.twitter.com/2/tweets/sample/stream"
+    response = requests.request('GET', url, headers=headers, stream=True)
+    print(response.status_code)
+    if response.status_code != 200:
+        print(response.text)
+        return
+    for response_line in response.iter_lines():
+        if response_line:
+            json_response = json.loads(response_line)
+            print(json.dumps(json_response, indent=4, sort_keys=True))
+        
     # Connect to Twitter in stream.
-    for raw_tweet in stream:
-        new_tweet = Tweet(raw_tweet)
-        example.append(raw_tweet)
-    return example
+    # for raw_tweet in stream:
+    #     new_tweet = Tweet(raw_tweet)
+    #     example.append(raw_tweet)
+    # return example
 
 
 def send_to_db(texts):
@@ -45,7 +62,7 @@ if __name__ == "__main__":
 
     while(True):
         # For every min/hour/day (doesn't matter)
-        tweets = get_tweets()
-        for tweet in tweets:
-            #note that tweet is a Tweet object
-            send_to_db(tweet.format_db_entry())
+        get_tweets()
+        # for tweet in tweets:
+        #     #note that tweet is a Tweet object
+        #     send_to_db(tweet.format_db_entry())
