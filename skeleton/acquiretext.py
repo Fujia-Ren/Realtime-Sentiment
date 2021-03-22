@@ -24,9 +24,18 @@ class Tweet(object):
     def _parse(self, raw_tweet):
         """Private method. Outputs tuple of (text, hashtags, time, user_id)"""
         # formats it into the fields we want. Check example json.
+        text = raw_tweet['data']['text']
+        hashtags = []
+        if 'entities' in raw_tweet['data'] and 'hashtags' in raw_tweet['data']['entities']:
+            hashtags = [x['tag'] for x in raw_tweet['data']['entities']['hashtags']]
+        time = raw_tweet['data']['created_at']
+        user_id = raw_tweet['data']['author_id']
+
+        return text, hashtags, time, user_id
 
     def format_db_entry(self):
         """Public function. Will make Tweet object into form of db entry. @TODO decide on exactly what that is"""
+        pass 
 
 def get_tweets():
     """
@@ -35,6 +44,7 @@ def get_tweets():
     headers = {'Authorization': 'Bearer {}'.format(os.environ.get("BEARER_TOKEN"))}
     url = "https://api.twitter.com/2/tweets/sample/stream?tweet.fields=author_id,created_at,entities"
     response = requests.request('GET', url, headers=headers, stream=True)
+    tweets = []
     print(response.status_code)
     if response.status_code != 200:
         print(response.text)
@@ -42,13 +52,13 @@ def get_tweets():
     for response_line in response.iter_lines():
         if response_line:
             json_response = json.loads(response_line)
-            print(json.dumps(json_response, indent=4, sort_keys=True))
-        
-    # Connect to Twitter in stream.
-    # for raw_tweet in stream:
-    #     new_tweet = Tweet(raw_tweet)
-    #     example.append(raw_tweet)
-    # return example
+            new_tweet = Tweet(json_response)
+            tweets.append(new_tweet)
+            print(new_tweet.user_id)
+            print(new_tweet.time)
+            print(new_tweet.text)
+            print(new_tweet.hashtags)
+            #print(json.dumps(json_response, indent=4, sort_keys=True))
 
 
 def send_to_db(texts):
