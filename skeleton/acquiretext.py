@@ -71,9 +71,8 @@ def send_to_db(texts):
 
 if __name__ == "__main__":
 
-    while(True):
         # For every min/hour/day (doesn't matter)
-        get_tweets()
+    get_tweets()
         # for tweet in tweets:
         #     #note that tweet is a Tweet object
         #     send_to_db(tweet.format_db_entry())
