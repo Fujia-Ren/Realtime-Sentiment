@@ -1,4 +1,4 @@
-
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 def get_texts_from_db():
     """
@@ -39,6 +39,11 @@ def send_analysis(doc):
     return analysis_result
 
 
+def sentiment_helper(message):
+    analyzer = SentimentIntensityAnalyzer()
+    scores = analyzer.polarity_scores(message)
+    return scores
+
 def update_hashtags(analysis):
     """
         With the analysis, update the data in HASHTAG DB accordingly 
@@ -47,9 +52,11 @@ def update_hashtags(analysis):
 
 
 if __name__ == "__main__":
-    while(True):
+    #while(True):
         # For every min/hour/day (doesn't matter)
-        texts = get_texts_from_db()
-        doc = make_document(texts)  # To send to
-        analysis = send_analysis(doc)
-        update_hashtags(analysis)
+        # texts = get_texts_from_db()
+        # doc = make_document(texts)  # To send to
+        # analysis = send_analysis(doc)
+        # update_hashtags(analysis)
+    print(sentiment_helper('Diana is the best'))
+    print(sentiment_helper('omg get a room guys'))
