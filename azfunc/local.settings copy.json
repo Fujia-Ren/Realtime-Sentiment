@@ -1,0 +1,11 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "python",
+    "BEARER_TOKEN": "AAAAAAAAAAAAAAAAAAAAABN8NwEAAAAAI3xOuDw5t6xcDV2%2FsDBgx1stnEY%3DMbZJ7ot2E6nCCg14INYSBhaQMZAgYOMzeERPmYl2rw4vOYgbQt"
+  },
+  "ConnectionStrings": {
+    "AzureCosmosDBConnectionString": "AccountEndpoint=https://maininstance.documents.azure.com:443/;AccountKey=8qqhKnX1Zkj8G5uC3Ltdn6YMUTBAYOgZ6JiwsXXVF0ThQZx5Rl67m75HHII6A3ksjn9EWbwAQ11OOO0EEI5Ojw==;"
+  }
+}
