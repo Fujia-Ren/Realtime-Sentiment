@@ -1,0 +1,39 @@
+{
+  "scriptFile": "__init__.py",
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "name": "currentDoc",
+      "type": "cosmosDB",
+      "databaseName": "main-database",
+      "collectionName": "hashtags",
+      "connectionStringSetting": "AzureCosmosDBConnectionString",
+      "direction": "in",
+      "sqlQuery": "select * from hashtags s where s.id={hashtag}"
+  },
+  
+    {
+      "type": "cosmosDB",
+      "direction": "out",
+      "name": "newDoc",
+      "databaseName": "main-database",
+      "collectionName": "hashtags",
+      "createIfNotExists": "false",
+      "connectionStringSetting": "AzureCosmosDBConnectionString"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "$return"
+    }
+  ]
+}
