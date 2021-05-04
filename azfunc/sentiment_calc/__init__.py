@@ -13,13 +13,16 @@ def average(sentiment, avg, count):
 
 
 def main(msgIn: func.QueueMessage, currentDoc: func.DocumentList, newDoc: func.Out[func.Document]) -> func.HttpResponse:
-
+    logging.info('Python queue trigger function processed a queue item.')
     # get the tweet
     msg_body = msgIn.get_body().decode('utf-8')
-    msg_dict = json.load(msg_body)
+    print(msg_body)
+    print(type(msg_body))
+    # .decode('utf-8')
+    msg_dict = json.loads(msg_body)
     tweet = msg_dict['text']
-    hashtag = msg_dict['hashtag'][0] if (
-        len(msg_dict['hashtag']) > 0) else "NOHASHTAG"
+    hashtag = msg_dict['hashtags'][0] if (
+        len(msg_dict['hashtags']) > 0) else "NOHASHTAG"
     #hashtags = msg_dict['hashtag']
 
     # analyze the sentiment of the tweet

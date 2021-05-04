@@ -5,7 +5,7 @@
       "name": "msgIn",
       "type": "queueTrigger",
       "direction": "in",
-      "queueName": "messages",
+      "queueName": "tweetsqueue",
       "connection": "AzureStorageQueuesConnectionString"
     },
     {
@@ -15,7 +15,7 @@
       "collectionName": "hashtags",
       "connectionStringSetting": "AzureCosmosDBConnectionString",
       "direction": "in",
-      "sqlQuery": "select * from hashtags s where s.id={hashtag}"
+      "sqlQuery": "select * from hashtags s where s.id = {Id}"
     },
     {
       "type": "cosmosDB",
