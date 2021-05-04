@@ -14,3 +14,8 @@ Microservices
 
 ML Model
 - Google cloud, etc. 
+
+## References
+[Twitter Stream API](https://developer.twitter.com/en/docs/twitter-api/tweets/sampled-stream/introduction)  
+[Azure fucntion output binding to CosmosDB (python)](https://evan-wong.medium.com/create-api-using-azure-function-with-python-and-azure-cosmos-db-afda09338d82)  
+[VADER Sentiment Analysis](https://github.com/cjhutto/vaderSentiment)

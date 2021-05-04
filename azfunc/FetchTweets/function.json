@@ -12,6 +12,22 @@
       ]
     },
     {
+      "type": "cosmosDB",
+      "direction": "out",
+      "name": "newDoc",
+      "databaseName": "main-database",
+      "collectionName": "tweets",
+      "createIfNotExists": "true",
+      "connectionStringSetting": "AzureCosmosDBConnectionString"
+    },
+    {
+      "type": "queue",
+      "direction": "out",
+      "name": "msg",
+      "queueName": "tweetsqueue",
+      "connection": "AzureStorageQueuesConnectionString"
+    },
+    {
       "type": "http",
       "direction": "out",
       "name": "$return"
