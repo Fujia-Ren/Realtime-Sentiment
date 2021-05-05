@@ -12,7 +12,7 @@ def average(sentiment, avg, count):
     return avg
 
 
-def main(msgIn: func.QueueMessage, currentDoc: func.DocumentList, newDoc: func.Out[func.Document]) -> func.HttpResponse:
+def main(msgIn: func.QueueMessage, currentDoc: func.DocumentList, newDoc: func.Out[func.Document]):
     logging.info('Python queue trigger function processed a queue item.')
     # get the tweet
     msg_body = msgIn.get_body().decode('utf-8')
@@ -37,7 +37,7 @@ def main(msgIn: func.QueueMessage, currentDoc: func.DocumentList, newDoc: func.O
             'count': 1
         })
         newDoc.set(newData)
-        return func.HttpResponse('wrote new data')
+        # return func.HttpResponse('wrote new data')
 
     # if the hashtag is in the DB, increment the count and add the sentiment
     # for this tweet to the running average
@@ -51,7 +51,7 @@ def main(msgIn: func.QueueMessage, currentDoc: func.DocumentList, newDoc: func.O
             'count': oldData['count'] + 1
         })
         newDoc.set(newData)
-        return func.HttpResponse('updated old data')
+        # return func.HttpResponse('updated old data')
 
 
 """

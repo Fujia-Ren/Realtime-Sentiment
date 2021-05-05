@@ -15,7 +15,7 @@
       "collectionName": "hashtags",
       "connectionStringSetting": "AzureCosmosDBConnectionString",
       "direction": "in",
-      "sqlQuery": "select * from hashtags s where s.id = {Id}"
+      "sqlQuery": "select * from hashtags s where s.id = {hashtag}"
     },
     {
       "type": "cosmosDB",
@@ -25,11 +25,6 @@
       "collectionName": "hashtags",
       "createIfNotExists": "false",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
-    },
-    {
-      "type": "http",
-      "direction": "out",
-      "name": "$return"
     }
   ]
 }

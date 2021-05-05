@@ -12,15 +12,17 @@ class Tweet(object):
     self.text (str): content of the tweet
     self.hashtags (lst(str)): list of hashtags in the tweet
     self.time (str): timestamp of when the tweet was posted
-    self.user_id (str): the Twitter user_id of the poster	
+    self.user_id (str): the Twitter user_id of the poster
     """
 
     # https://developer.twitter.com/en/docs/twitter-api/data-dictionary/object-model/tweet
     def __init__(self, raw_tweet):
-        text, hashtags, time, user_id, tweet_id = self._parse(raw_tweet)
+        text, hashtags, hashtag, time, user_id, tweet_id = self._parse(
+            raw_tweet)
         self.id = tweet_id
         self.text = text
         self.hashtags = hashtags
+        self.hashtag = hashtag  # first of hashtags
         self.time = time
         self.user_id = user_id
 
@@ -32,11 +34,13 @@ class Tweet(object):
         if 'entities' in raw_tweet['data'] and 'hashtags' in raw_tweet['data']['entities']:
             hashtags = [x['tag']
                         for x in raw_tweet['data']['entities']['hashtags']]
+        hashtag = hashtags[0] if (
+            len(hashtags) > 0) else "NOHASHTAG"
         time = raw_tweet['data']['created_at']
         user_id = raw_tweet['data']['author_id']
         tweet_id = raw_tweet['data']['id']
 
-        return text, hashtags, time, user_id, tweet_id
+        return text, hashtags, hashtag, time, user_id, tweet_id
 
     def format_db_entry(self):
         """Public function. Will make Tweet object into form of db entry. @TODO decide on exactly what that is"""
