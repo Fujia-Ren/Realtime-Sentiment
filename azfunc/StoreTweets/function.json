@@ -1,0 +1,22 @@
+{
+  "scriptFile": "__init__.py",
+  "bindings": [
+    {
+      "name": "msg",
+      "type": "queueTrigger",
+      "direction": "in",
+      "queueName": "tweetsqueue",
+      "connection": "AzureStorageQueuesConnectionString"
+    },
+    {
+      "type": "cosmosDB",
+      "direction": "out",
+      "name": "newDoc",
+      "databaseName": "main-database",
+      "collectionName": "tweets",
+      "createIfNotExists": "true",
+      "partitionKey": "/id",
+      "connectionStringSetting": "AzureCosmosDBConnectionString"
+    }
+  ]
+}
