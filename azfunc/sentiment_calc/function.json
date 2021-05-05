@@ -2,14 +2,11 @@
   "scriptFile": "__init__.py",
   "bindings": [
     {
-      "authLevel": "anonymous",
-      "type": "httpTrigger",
+      "name": "msgIn",
+      "type": "queueTrigger",
       "direction": "in",
-      "name": "req",
-      "methods": [
-        "get",
-        "post"
-      ]
+      "queueName": "tweetsqueue",
+      "connection": "AzureStorageQueuesConnectionString"
     },
     {
       "name": "currentDoc",
@@ -18,9 +15,8 @@
       "collectionName": "hashtags",
       "connectionStringSetting": "AzureCosmosDBConnectionString",
       "direction": "in",
-      "sqlQuery": "select * from hashtags s where s.id={hashtag}"
-  },
-  
+      "sqlQuery": "select * from hashtags s where s.id = {hashtag}"
+    },
     {
       "type": "cosmosDB",
       "direction": "out",
@@ -29,11 +25,6 @@
       "collectionName": "hashtags",
       "createIfNotExists": "false",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
-    },
-    {
-      "type": "http",
-      "direction": "out",
-      "name": "$return"
     }
   ]
 }
