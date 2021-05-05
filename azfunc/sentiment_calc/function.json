@@ -23,7 +23,8 @@
       "name": "newDoc",
       "databaseName": "main-database",
       "collectionName": "hashtags",
-      "createIfNotExists": "false",
+      "createIfNotExists": "true",
+      "partitionKey": "/id",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     }
   ]
