@@ -12,7 +12,7 @@
       "name": "mytimer",
       "type": "timerTrigger",
       "direction": "in",
-      "schedule": "0 50 23 * * *"
+      "schedule": "0 37 4 * * *"
     }
   ]
 }
