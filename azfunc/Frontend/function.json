@@ -1,0 +1,30 @@
+{
+  "scriptFile": "__init__.py",
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "name": "currentDoc",
+      "type": "cosmosDB",
+      "databaseName": "main-database",
+      "collectionName": "hashtags",
+      "connectionStringSetting": "AzureCosmosDBConnectionString",
+      "direction": "in",
+      "Id": "{Query.id}",
+      "partitionKey": "{Query.id}"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "$return"
+    }
+  ]
+}
