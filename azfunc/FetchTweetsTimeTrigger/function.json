@@ -1,0 +1,18 @@
+{
+  "scriptFile": "__init__.py",
+  "bindings": [
+    {
+      "type": "queue",
+      "direction": "out",
+      "name": "msg",
+      "queueName": "tweetsqueue",
+      "connection": "AzureStorageQueuesConnectionString"
+    },
+    {
+      "name": "mytimer",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "0 50 23 * * *"
+    }
+  ]
+}
