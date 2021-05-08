@@ -5,14 +5,14 @@
       "type": "queue",
       "direction": "out",
       "name": "msg",
-      "queueName": "tweetsqueue",
+      "queueName": "storetweetsqueue",
       "connection": "AzureStorageQueuesConnectionString"
     },
     {
       "name": "mytimer",
       "type": "timerTrigger",
       "direction": "in",
-      "schedule": "0 50 23 * * *"
+      "schedule": "0 44 19 * * *"
     }
   ]
 }

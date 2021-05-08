@@ -18,6 +18,7 @@
       "databaseName": "main-database",
       "collectionName": "tweets",
       "createIfNotExists": "true",
+      "partitionKey": "/id",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
     },
     {
