@@ -4,7 +4,14 @@
     {
       "type": "queue",
       "direction": "out",
-      "name": "msg",
+      "name": "msgMain",
+      "queueName": "tweetsqueue",
+      "connection": "AzureStorageQueuesConnectionString"
+    },
+    {
+      "type": "queue",
+      "direction": "out",
+      "name": "msgBackup",
       "queueName": "storetweetsqueue",
       "connection": "AzureStorageQueuesConnectionString"
     },

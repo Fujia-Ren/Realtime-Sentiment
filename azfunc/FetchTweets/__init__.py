@@ -101,14 +101,15 @@ def get_tweets(end_time):
     return tweets
 
 
-def main(req: func.HttpRequest, msg: func.Out[typing.List[str]]):
+def main(req: func.HttpRequest, msgMain: func.Out[typing.List[str]], msgBackup: func.Out[typing.List[str]]):
     logging.info('Python HTTP trigger function processed a request.')
     end_time = time.time() + 5
     tweets = get_tweets(end_time)
     response_body = json.dumps([tweet.__dict__ for tweet in tweets])
     # Handle Queue output
     qtweets = [json.dumps(tweet.__dict__) for tweet in tweets]
-    msg.set(qtweets)
+    msgMain.set(qtweets)
+    msgBackup.set(qtweets)
 
     # Handle HTTP Output
     name = req.params.get('name')
