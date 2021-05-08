@@ -21,4 +21,5 @@ ML Model
 [VADER Sentiment Analysis](https://github.com/cjhutto/vaderSentiment)  
 [Queue input binding and DB query example](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-input?tabs=python#queue-trigger-look-up-id-from-json-python)  
 [Non-string values dont work](https://stackoverflow.com/questions/48619140/azure-function-http-trigger-inputting-cosmos-db-document)
-[Time trigger for Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=python)
+[Time trigger for Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=python)  
+[Manually triggering a time trigger function](https://docs.microsoft.com/en-us/azure/azure-functions/functions-manually-run-non-http)
