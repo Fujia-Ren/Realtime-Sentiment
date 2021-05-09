@@ -12,20 +12,17 @@
       ]
     },
     {
-      "type": "cosmosDB",
+      "type": "queue",
       "direction": "out",
-      "name": "newDoc",
-      "databaseName": "main-database",
-      "collectionName": "tweets",
-      "createIfNotExists": "true",
-      "partitionKey": "/id",
-      "connectionStringSetting": "AzureCosmosDBConnectionString"
+      "name": "msgMain",
+      "queueName": "tweetsqueue",
+      "connection": "AzureStorageQueuesConnectionString"
     },
     {
       "type": "queue",
       "direction": "out",
-      "name": "msg",
-      "queueName": "tweetsqueue",
+      "name": "msgBackup",
+      "queueName": "storetweetsqueue",
       "connection": "AzureStorageQueuesConnectionString"
     },
     {

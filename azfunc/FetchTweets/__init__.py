@@ -16,31 +16,60 @@ class Tweet(object):
     """
 
     # https://developer.twitter.com/en/docs/twitter-api/data-dictionary/object-model/tweet
-    def __init__(self, raw_tweet):
-        text, hashtags, hashtag, time, user_id, tweet_id = self._parse(
-            raw_tweet)
-        self.id = tweet_id
-        self.text = text
-        self.hashtags = hashtags
-        self.hashtag = hashtag  # first of hashtags
-        self.time = time
-        self.user_id = user_id
+    def __init__(self, raw_tweet=None, tweet_to_copy=None):
+        if raw_tweet != None:
+            text, hashtags, hashtag, time, user_id, tweet_id = self._parse(
+                raw_tweet)
+            self.id = tweet_id
+            self.text = text
+            self.hashtags = hashtags
+            self.hashtag = hashtag  # first of hashtags
+            self.time = time
+            self.user_id = user_id
+        elif tweet_to_copy != None:
+            self.id = tweet_to_copy.id
+            self.text = tweet_to_copy.text
+            self.hashtags = tweet_to_copy.hashtags
+            self.hashtag = tweet_to_copy.hashtag
+            self.time = tweet_to_copy.time
+            self.user_id = tweet_to_copy.user_id
 
     def _parse(self, raw_tweet):
         """Private method. Outputs tuple of (text, hashtags, time, user_id)"""
         # formats it into the fields we want. Check example json.
         text = raw_tweet['data']['text']
+        if type(text) != str:
+            text = text.decode()
         hashtags = []
         if 'entities' in raw_tweet['data'] and 'hashtags' in raw_tweet['data']['entities']:
             hashtags = [x['tag']
                         for x in raw_tweet['data']['entities']['hashtags']]
         hashtag = hashtags[0] if (
-            len(hashtags) > 0) else "NOHASHTAG"
+            len(hashtags) > 0) else ""
         time = raw_tweet['data']['created_at']
         user_id = raw_tweet['data']['author_id']
         tweet_id = raw_tweet['data']['id']
 
         return text, hashtags, hashtag, time, user_id, tweet_id
+
+    def set_hashtag(self, hashtag):
+        self.hashtag = hashtag
+
+    def set_id(self, tweet_id):
+        self.id = tweet_id
+
+    def copy_with_hashtag(self, hashtag, append_at_tweet_id=""):
+        copied = Tweet(tweet_to_copy=self)
+        copied.set_hashtag(hashtag)
+        copied.set_id(self.id + append_at_tweet_id)
+        return copied
+
+    def split_with_hashtags(self):
+        """ Returns a list of Tweets with one hashtag each from self.
+            If self has no hashtag, an empty list is returned. """
+        tweets = [self.copy_with_hashtag(hashtag, append_at_tweet_id=str(
+            idx)) for idx, hashtag in enumerate(self.hashtags)]
+        return tweets
 
     def format_db_entry(self):
         """Public function. Will make Tweet object into form of db entry. @TODO decide on exactly what that is"""
@@ -66,23 +95,23 @@ def get_tweets(end_time):
             break
         if response_line:
             json_response = json.loads(response_line)
-            new_tweet = Tweet(json_response)
-            if type(new_tweet.text) != str:
-                new_tweet.text = new_tweet.text.decode()
-            tweets.append(new_tweet)
+            new_tweet = Tweet(raw_tweet=json_response)
+            new_tweets = new_tweet.split_with_hashtags()
+            tweets.extend(new_tweets)
     return tweets
 
 
-def main(req: func.HttpRequest, msg: func.Out[typing.List[str]], newDoc: func.Out[func.Document]) -> func.HttpResponse:
+def main(req: func.HttpRequest, msgMain: func.Out[typing.List[str]], msgBackup: func.Out[typing.List[str]]):
     logging.info('Python HTTP trigger function processed a request.')
     end_time = time.time() + 5
     tweets = get_tweets(end_time)
     response_body = json.dumps([tweet.__dict__ for tweet in tweets])
+    # Handle Queue output
     qtweets = [json.dumps(tweet.__dict__) for tweet in tweets]
-    msg.set(qtweets)
-    for tweet in tweets:
-        newData = func.Document.from_dict(tweet.__dict__)
-        newDoc.set(newData)
+    msgMain.set(qtweets)
+    msgBackup.set(qtweets)
+
+    # Handle HTTP Output
     name = req.params.get('name')
     if not name:
         try:

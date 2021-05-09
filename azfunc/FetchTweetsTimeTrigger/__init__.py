@@ -102,7 +102,7 @@ def get_tweets(end_time):
     return tweets
 
 
-def main(msg: func.Out[typing.List[str]], mytimer: func.TimerRequest) -> None:
+def main(mytimer: func.TimerRequest, msgMain: func.Out[typing.List[str]], msgBackup: func.Out[typing.List[str]]) -> None:
     utc_timestamp = datetime.datetime.utcnow().replace(
         tzinfo=datetime.timezone.utc).isoformat()
 
@@ -113,4 +113,5 @@ def main(msg: func.Out[typing.List[str]], mytimer: func.TimerRequest) -> None:
     end_time = time.time() + 5
     tweets = get_tweets(end_time)
     qtweets = [json.dumps(tweet.__dict__) for tweet in tweets]
-    msg.set(qtweets)
+    msgMain.set(qtweets)
+    msgBackup.set(qtweets)
