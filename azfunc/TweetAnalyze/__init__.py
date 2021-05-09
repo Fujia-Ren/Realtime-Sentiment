@@ -5,10 +5,10 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import azure.functions as func
 
 
-def average(sentiment, avg, count):
+def average(sentiment, avg, frequency):
     for field, score in avg.items():
         newScore = sentiment[field]
-        avg[field] = ((count-1)*score + newScore)/count
+        avg[field] = ((frequency-1)*score + newScore)/frequency
     return avg
 
 
@@ -21,8 +21,7 @@ def main(msgIn: func.QueueMessage, currentDoc: func.DocumentList, newDoc: func.O
     # .decode('utf-8')
     msg_dict = json.loads(msg_body)
     tweet = msg_dict['text']
-    hashtag = msg_dict['hashtags'][0] if (
-        len(msg_dict['hashtags']) > 0) else "NOHASHTAG"
+    hashtag = msg_dict['hashtag'] if (msg_dict['hashtag'] != "") else "NOHASHTAG"
     #hashtags = msg_dict['hashtag']
 
     # analyze the sentiment of the tweet
@@ -36,24 +35,24 @@ def main(msgIn: func.QueueMessage, currentDoc: func.DocumentList, newDoc: func.O
         newData = func.Document.from_dict({
             'id': hashtag,
             'sentiment': json.dumps(scores),
-            'count': 1,
+            'frequency': 1,
             'tweets': [tweet]
         })
         newDoc.set(newData)
 
     # if the hashtag is in the DB, update the entry:
-    # - increment the count
+    # - increment the frequency
     # - add the sentiment for this tweet to the running average
     # - add the tweet to the list of sample tweets
     else:
         old_data = currentDoc[0]
 
-        # increment count
-        count = old_data['count'] + 1
+        # increment frequency
+        frequency = old_data['frequency'] + 1
 
         # update sentiment
         running_avg = json.loads(old_data['sentiment'])
-        new_avg = average(scores, running_avg, old_data['count'] + 1)
+        new_avg = average(scores, running_avg, old_data['frequency'] + 1)
         if 'tweets' in old_data:
             tweets = old_data['tweets']
         else:
@@ -68,7 +67,7 @@ def main(msgIn: func.QueueMessage, currentDoc: func.DocumentList, newDoc: func.O
 
         newData = func.Document.from_dict({
             'id': hashtag,
-            'count': count,
+            'frequency': frequency,
             'sentiment': json.dumps(new_avg),
             'tweets': tweets
         })
