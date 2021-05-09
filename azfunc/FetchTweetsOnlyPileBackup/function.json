@@ -4,13 +4,6 @@
     {
       "type": "queue",
       "direction": "out",
-      "name": "msgMain",
-      "queueName": "tweetsqueue",
-      "connection": "AzureStorageQueuesConnectionString"
-    },
-    {
-      "type": "queue",
-      "direction": "out",
       "name": "msgBackup",
       "queueName": "storetweetsqueue",
       "connection": "AzureStorageQueuesConnectionString"
@@ -19,7 +12,7 @@
       "name": "mytimer",
       "type": "timerTrigger",
       "direction": "in",
-      "schedule": "0 44 19 1 * *"
+      "schedule": "0 0 0 1 * *"
     }
   ]
 }
