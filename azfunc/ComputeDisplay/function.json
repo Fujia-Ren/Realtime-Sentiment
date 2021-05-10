@@ -1,0 +1,32 @@
+{
+  "scriptFile": "__init__.py",
+  "bindings": [
+    {
+      "type": "cosmosDBTrigger",
+      "name": "documents",
+      "direction": "in",
+      "leaseCollectionName": "leases",
+      "connectionStringSetting": "AzureCosmosDBConnectionString",
+      "databaseName": "main-database",
+      "collectionName": "hashtags",
+      "createLeaseCollectionIfNotExists": "true"
+    },
+    {
+      "type": "cosmosDB",
+      "name": "currentFrequencies",
+      "direction": "in",
+      "databaseName": "main-database",
+      "collectionName": "display",
+      "connectionStringSetting": "AzureCosmosDBConnectionString",
+      "sqlQuery": "select * from display s where s.id = 'display_frequent'"
+    },
+    {
+      "type": "cosmosDB",
+      "name": "newFrequencies",
+      "direction": "out",
+      "databaseName": "main-database",
+      "collectionName": "display",
+      "connectionStringSetting": "AzureCosmosDBConnectionString"
+    }
+  ]
+}
