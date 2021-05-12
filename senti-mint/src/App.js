@@ -19,13 +19,12 @@ function App() {
   }, []);
 
   const dataSection = data 
-    ? <ul>{data.map(item => <li>{item}</li>)}</ul>
+    ? <HashTagList hashtags={data} />
     : <div id="data">Loading...</div>
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Most Frequent Hashtags:
         </p>
@@ -35,5 +34,34 @@ function App() {
     </div>
   );
 }
+
+const HashTagList = ({ hashtags }) => {
+  const hashTagSections = hashtags.map(hashtag => (
+    <HashTagSection 
+      tweets={hashtag.tweets}
+      sentiment={hashtag.sentiment}
+      frequency={hashtag.frequency}
+      id={hashtag.id}
+      key={hashtag.id}
+    />
+  ));
+
+  return <div>{hashTagSections}</div>
+};
+
+const HashTagSection = ({ tweets, sentiment, frequency, id }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const handleClick = () => setIsExpanded(!isExpanded);
+  const tweetList = tweets.map((tweet, idx) => <li key={idx}>{tweet}</li>);
+
+  return (
+    <div onClick={handleClick}>
+      <h3>Hashtag: {id}</h3>
+      <h3>Frequency: {frequency}</h3>
+      <h3>Sentiment: {sentiment}</h3>
+      {isExpanded && <ul>{tweetList}</ul>}
+    </div>
+  );
+};
 
 export default App;
