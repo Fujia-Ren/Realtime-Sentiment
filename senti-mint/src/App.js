@@ -19,7 +19,7 @@ function App() {
   }, []);
 
   const dataSection = data 
-    ? <HashTagList hashtags={data} />
+    ? <HashtagList hashtags={data} />
     : <div id="data">Loading...</div>
 
   return (
@@ -35,9 +35,9 @@ function App() {
   );
 }
 
-const HashTagList = ({ hashtags }) => {
+const HashtagList = ({ hashtags }) => {
   const hashTagSections = hashtags.map(hashtag => (
-    <HashTagSection 
+    <HashtagSection 
       tweets={hashtag.tweets}
       sentiment={hashtag.sentiment}
       frequency={hashtag.frequency}
@@ -49,17 +49,28 @@ const HashTagList = ({ hashtags }) => {
   return <div>{hashTagSections}</div>
 };
 
-const HashTagSection = ({ tweets, sentiment, frequency, id }) => {
+const HashtagSection = ({ tweets, sentiment, frequency, id }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const handleClick = () => setIsExpanded(!isExpanded);
   const tweetList = tweets.map((tweet, idx) => <li key={idx}>{tweet}</li>);
 
+  let tweetListClassName = "hashtag-tweetlist";
+
+  if (!isExpanded) {
+    tweetListClassName += " hidden";
+  }
+
   return (
-    <div onClick={handleClick}>
-      <h3>Hashtag: {id}</h3>
-      <h3>Frequency: {frequency}</h3>
-      <h3>Sentiment: {sentiment}</h3>
-      {isExpanded && <ul>{tweetList}</ul>}
+    <div onClick={handleClick} className="hashtag-section">
+      
+      <div className="hashtag-box">
+        <div className="idAndFrequency">
+          <div className="hashtag-id">#{id}</div>
+          <div className="hashtag-frequency">Frequency: {frequency}</div>
+        </div>
+        <div className="hashtag-sentiment"><br/>Sentiment: {sentiment}</div>
+      </div>
+      <ul className={tweetListClassName}>{tweetList}</ul>
     </div>
   );
 };
