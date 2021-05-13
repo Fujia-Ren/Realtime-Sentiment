@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
+
 .App {
   text-align: center;
 }
@@ -35,4 +37,57 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.hashtag-section {
+  font-family: Abel;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 36px;
+  line-height: 46px;
+  text-align: left;
+}
+
+.hashtag-section .hashtag-box {
+  border-style: solid;
+  border-radius: 20px;
+  position: relative;
+  width: 1000px;
+}
+
+.hashtag-id {
+  display: block;
+  font-weight: bold;
+  font-size: 50px;
+  top: 50%;
+  display: block;
+} 
+
+.hashtag-frequency {
+  display: block;
+}
+
+.idAndFrequency {
+  display: inline-block;
+}
+
+.hashtag-sentiment {
+  display: inline-block;
+  /* position: absolute; */
+  /* right: 10px;
+  top: 50%; */
+  float: right;
+}
+
+.hashtag-tweetlist li{
+  font-family: Abel;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 36px;
+  line-height: 46px;
+  text-align: left;
+}
+
+.hashtag-tweetlist.hidden {
+  display: none;
 }

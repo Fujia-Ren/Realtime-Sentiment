@@ -21,6 +21,8 @@ def main(req: func.HttpRequest, currentDoc: func.DocumentList) -> func.HttpRespo
     if request_type:
         print('here')
         data = currentDoc[0]['hashtags']
+        for elem in data:
+            elem['sentiment'] = round(float(json.loads(elem['sentiment'])['compound']), 2)
         data_as_json = json.dumps(data)
         return func.HttpResponse(data_as_json)
     else:

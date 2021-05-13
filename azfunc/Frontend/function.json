@@ -15,7 +15,7 @@
       "name": "currentDoc",
       "type": "cosmosDB",
       "databaseName": "main-database",
-      "collectionName": "hashtags",
+      "collectionName": "display",
       "connectionStringSetting": "AzureCosmosDBConnectionString",
       "direction": "in",
       "Id": "{Query.id}",
