@@ -110,7 +110,7 @@ def main(mytimer: func.TimerRequest, msgMain: func.Out[typing.List[str]], msgBac
         logging.info('The timer is past due!')
 
     logging.info('Python timer trigger function ran at %s', utc_timestamp)
-    end_time = time.time() + 5
+    end_time = time.time() + 240
     tweets = get_tweets(end_time)
     qtweets = [json.dumps(tweet.__dict__) for tweet in tweets]
     msgMain.set(qtweets)
