@@ -4,9 +4,10 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 
-function MostFrequent(){
+function MostFrequent() {
   return axios
-    .get('http://localhost:7071/api/Frontend?id=display_frequent&type=mylife')
+    //.get('http://localhost:7071/api/Frontend?id=display_frequent&type=mylife')
+    .get('https://tweetsentimentapp.azurewebsites.net/api/Frontend?id=display_frequent&type=mylife')
     .then((response) => response.data);
 }
 
@@ -15,10 +16,10 @@ function App() {
   const [data, setData] = useState();
 
   useEffect(() => {
-      MostFrequent().then(data => setData(data));
+    MostFrequent().then(data => setData(data));
   }, []);
 
-  const dataSection = data 
+  const dataSection = data
     ? <HashtagList hashtags={data} />
     : <div id="data">Loading...</div>
 
@@ -37,7 +38,7 @@ function App() {
 
 const HashtagList = ({ hashtags }) => {
   const hashTagSections = hashtags.map(hashtag => (
-    <HashtagSection 
+    <HashtagSection
       tweets={hashtag.tweets}
       sentiment={hashtag.sentiment}
       frequency={hashtag.frequency}
@@ -62,13 +63,13 @@ const HashtagSection = ({ tweets, sentiment, frequency, id }) => {
 
   return (
     <div onClick={handleClick} className="hashtag-section">
-      
+
       <div className="hashtag-box">
         <div className="idAndFrequency">
           <div className="hashtag-id">#{id}</div>
           <div className="hashtag-frequency">Frequency: {frequency}</div>
         </div>
-        <div className="hashtag-sentiment"><br/>Sentiment: {sentiment}</div>
+        <div className="hashtag-sentiment"><br />Sentiment: {sentiment}</div>
       </div>
       <ul className={tweetListClassName}>{tweetList}</ul>
     </div>
