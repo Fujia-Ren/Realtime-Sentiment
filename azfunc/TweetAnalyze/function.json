@@ -26,24 +26,6 @@
       "createIfNotExists": "true",
       "partitionKey": "/id",
       "connectionStringSetting": "AzureCosmosDBConnectionString"
-    },
-    {
-      "name": "currentDisplayDoc",
-      "type": "cosmosDB",
-      "databaseName": "main-database",
-      "collectionName": "display",
-      "connectionStringSetting": "AzureCosmosDBConnectionString",
-      "direction": "in",
-      "sqlQuery": "select * from c where c.id = 'count'"
-    },
-    {
-      "type": "cosmosDB",
-      "direction": "out",
-      "name": "newDisplayDoc",
-      "databaseName": "main-database",
-      "collectionName": "display",
-      "createIfNotExists": "false",
-      "connectionStringSetting": "AzureCosmosDBConnectionString"
     }
   ]
 }

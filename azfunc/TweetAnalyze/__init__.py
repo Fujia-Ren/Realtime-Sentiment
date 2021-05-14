@@ -12,8 +12,8 @@ def average(sentiment, avg, frequency):
     return avg
 
 
-def main(msgIn: func.QueueMessage, currentDoc: func.DocumentList, newDoc: func.Out[func.Document],
-         currentDisplayDoc: func.DocumentList, newDisplayDoc: func.Out[func.Document]):
+def main(msgIn: func.QueueMessage, currentDoc: func.DocumentList, newDoc: func.Out[func.Document]):
+    # currentDisplayDoc: func.DocumentList, newDisplayDoc: func.Out[func.Document]):
     #logging.info('Python queue trigger function processed a queue item.')
     # get the tweet
     msg_body = msgIn.get_body().decode('utf-8')
@@ -75,6 +75,7 @@ def main(msgIn: func.QueueMessage, currentDoc: func.DocumentList, newDoc: func.O
         })
         newDoc.set(newData)
 
+    """
     # Update count in the displayDB
     if len(currentDisplayDoc) != 0:
         old_count_data = currentDisplayDoc[0]
@@ -84,3 +85,4 @@ def main(msgIn: func.QueueMessage, currentDoc: func.DocumentList, newDoc: func.O
             'count': new_count
         })
         newDisplayDoc.set(newDisplayData)
+        """
