@@ -1,0 +1,32 @@
+{
+  "scriptFile": "__init__.py",
+  "bindings": [
+    {
+      "type": "cosmosDBTrigger",
+      "name": "documents",
+      "direction": "in",
+      "leaseCollectionName": "leases",
+      "connectionStringSetting": "AzureCosmosDBConnectionString",
+      "databaseName": "main-database",
+      "collectionName": "tweets",
+      "createLeaseCollectionIfNotExists": "true"
+    },
+    {
+      "type": "cosmosDB",
+      "name": "currentCount",
+      "direction": "in",
+      "databaseName": "main-database",
+      "collectionName": "tweets",
+      "connectionStringSetting": "AzureCosmosDBConnectionString",
+      "sqlQuery": "select count(1) from s"
+    },
+    {
+      "type": "cosmosDB",
+      "name": "newCount",
+      "direction": "out",
+      "databaseName": "main-database",
+      "collectionName": "display",
+      "connectionStringSetting": "AzureCosmosDBConnectionString"
+    }
+  ]
+}

@@ -13,15 +13,17 @@ def average(sentiment, avg, frequency):
 
 
 def main(msgIn: func.QueueMessage, currentDoc: func.DocumentList, newDoc: func.Out[func.Document]):
+    # currentDisplayDoc: func.DocumentList, newDisplayDoc: func.Out[func.Document]):
     #logging.info('Python queue trigger function processed a queue item.')
     # get the tweet
     msg_body = msgIn.get_body().decode('utf-8')
-    #print(msg_body)
-    #print(type(msg_body))
+    # print(msg_body)
+    # print(type(msg_body))
     # .decode('utf-8')
     msg_dict = json.loads(msg_body)
     tweet = msg_dict['text']
-    hashtag = msg_dict['hashtag'] if (msg_dict['hashtag'] != "") else "NOHASHTAG"
+    hashtag = msg_dict['hashtag'] if (
+        msg_dict['hashtag'] != "") else "NOHASHTAG"
     #hashtags = msg_dict['hashtag']
 
     # analyze the sentiment of the tweet
@@ -31,7 +33,7 @@ def main(msgIn: func.QueueMessage, currentDoc: func.DocumentList, newDoc: func.O
     # if the hashtag is not in the DB, add a new record
     if len(currentDoc) == 0:
         logging.info(f'new entry for {hashtag} with tweet {tweet}')
-        
+
         newData = func.Document.from_dict({
             'id': hashtag,
             'sentiment': json.dumps(scores),
@@ -62,7 +64,7 @@ def main(msgIn: func.QueueMessage, currentDoc: func.DocumentList, newDoc: func.O
         tweets.append(tweet)
         if len(tweets) > 10:
             tweets.pop(0)
-        
+
         logging.info(f'updated info for {hashtag} with tweets {tweets}')
 
         newData = func.Document.from_dict({
@@ -72,3 +74,15 @@ def main(msgIn: func.QueueMessage, currentDoc: func.DocumentList, newDoc: func.O
             'tweets': tweets
         })
         newDoc.set(newData)
+
+    """
+    # Update count in the displayDB
+    if len(currentDisplayDoc) != 0:
+        old_count_data = currentDisplayDoc[0]
+        new_count = old_count_data['count'] + 1
+        newDisplayData = func.Document.from_dict({
+            'id': "count",
+            'count': new_count
+        })
+        newDisplayDoc.set(newDisplayData)
+        """

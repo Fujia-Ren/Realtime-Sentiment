@@ -7,25 +7,35 @@ import axios from 'axios';
 function MostFrequent() {
   return axios
     //.get('http://localhost:7071/api/Frontend?id=display_frequent&type=mylife')
-    .get('https://tweetsentimentapp.azurewebsites.net/api/Frontend?id=display_frequent&type=mylife')
+    .get('https://tweetsentimentapp.azurewebsites.net/api/Frontend?id=display_frequent')
+    .then((response) => response.data);
+}
+
+function TotalCount() {
+  return axios
+    .get('https://tweetsentimentapp.azurewebsites.net/api/Frontend?id=count')
     .then((response) => response.data);
 }
 
 function App() {
 
-  const [data, setData] = useState();
+  const [hashtag_data, setHashtagData] = useState();
+  const [count_data, setCountData] = useState(0);
 
   useEffect(() => {
-    MostFrequent().then(data => setData(data));
+    MostFrequent().then(hashtag_data => setHashtagData(hashtag_data));
+    TotalCount().then(count_data => setCountData(count_data));
   }, []);
 
-  const dataSection = data
-    ? <HashtagList hashtags={data} />
+  const countSection = <div id="count"> Total number of tweets: {count_data}</div>
+  const dataSection = hashtag_data
+    ? <HashtagList hashtags={hashtag_data} />
     : <div id="data">Loading...</div>
 
   return (
     <div className="App">
       <header className="App-header">
+        {countSection}
         <p>
           Most Frequent Hashtags:
         </p>
